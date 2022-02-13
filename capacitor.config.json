@@ -1,0 +1,6 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "bottle-times",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
