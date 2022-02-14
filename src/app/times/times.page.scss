@@ -47,3 +47,14 @@ ion-item {
     height: 18px;
   }
 }
+
+.ounces-col {
+  display: flex;
+  justify-content: space-around;
+  
+  .ounces-edit-button {
+    font-size: 25px;
+    line-height: 0.7;
+    background: transparent;
+  }
+}

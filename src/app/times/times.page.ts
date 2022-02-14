@@ -22,9 +22,12 @@ export class TimesPage {
   itemsRef: AngularFireList<BottleTime>;
   items: Observable<BottleTime[]>;
 
-  constructor(private db: AngularFireDatabase, private modalController: ModalController, private routerOutlet: IonRouterOutlet, private authService: AuthService) {
-    
-    
+  constructor(
+    private db: AngularFireDatabase,
+    private modalController: ModalController,
+    private routerOutlet: IonRouterOutlet,
+    private authService: AuthService,
+  ) {
     this.itemsRef = this.db.list('times');
 
     this.items = this.itemsRef.snapshotChanges().pipe(
@@ -34,26 +37,31 @@ export class TimesPage {
           this.authService.signinWithGoogle();
         }
         return [];
-      })
+      }),
     );
-  }
-
-  add() {
-    this.edit({ date: new Date().toJSON(), ounces: 4 });
   }
 
   remove(key: string) {
     this.itemsRef.remove(key);
   }
 
-  async edit(item: BottleTime) {
+  quickEditOZ(item: BottleTime, change: -1 | 1) {
+    item.ounces += change;
+    this.itemsRef.update(item.key, item);
+  }
+
+  async edit(item?: BottleTime) {
     const modal = await this.modalController.create({
       component: EditComponent,
       swipeToClose: true,
       presentingElement: this.routerOutlet.nativeEl,
-      componentProps: { item: Object.assign({}, item) },
+      componentProps: { item },
     });
 
     return await modal.present();
+  }
+
+  trackKey(_: number, item: BottleTime) {
+    return item.key;
   }
 }

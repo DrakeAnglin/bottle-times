@@ -7,7 +7,7 @@
 <ion-content [fullscreen]="true">
   <ion-card *ngFor="let date of items | async | groupByDate">
     <ion-card-header>
-      <ion-grid >
+      <ion-grid>
         <ion-row>
           <ion-col size="2" class="date-header">
             <div>
@@ -15,17 +15,13 @@
                 <b> {{ date.date | date: 'ccc' }} </b>
               </small>
             </div>
-            <h2 style="margin: 0;"> {{ date.date | date: 'dd' }} </h2>
+            <h2 style="margin: 0">{{ date.date | date: 'dd' }}</h2>
             <small>{{ date.date | date: 'MMM' }}</small>
           </ion-col>
           <ion-col>
             <div class="counts-container">
-              <div>
-                Formula <b> {{ date.oz }} </b> oz.
-              </div>
-              <div>
-                {{ date.times.length }} Feedings  
-              </div>
+              <div>Formula <b> {{ date.oz }} </b> oz.</div>
+              <div>{{ date.times.length }} Feedings</div>
             </div>
           </ion-col>
         </ion-row>
@@ -33,7 +29,7 @@
     </ion-card-header>
 
     <ion-list lines="none">
-      <ng-container *ngFor="let item of date.times">
+      <ng-container *ngFor="let item of date.times; trackBy: trackKey ">
         <div class="divider"></div>
         <ion-item-sliding>
           <ion-item-options side="start">
@@ -46,8 +42,16 @@
           <ion-item>
             <ion-label>
               <ion-row>
-                <ion-col class="ion-align-self-start"> {{ item.ounces }} oz </ion-col>
-                <ion-col class="ion-align-self-end"> {{ item.date | date: 'h:mm a' }} </ion-col>
+                <ion-col class="ounces-col">
+                  {{ item.ounces }} oz
+                  <button class="ounces-edit-button" (click)="quickEditOZ(item, -1)">
+                    <ion-icon name="remove-circle-outline" color="primary"></ion-icon>
+                  </button>
+                  <button class="ounces-edit-button" (click)="quickEditOZ(item, 1)">
+                    <ion-icon name="add-circle-outline" color="primary"></ion-icon>
+                  </button>
+                </ion-col>
+                <ion-col class="ion-text-end"> {{ item.date | date: 'h:mm a' }} </ion-col>
               </ion-row>
             </ion-label>
           </ion-item>
@@ -64,7 +68,7 @@
   </ion-card>
 
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-    <ion-fab-button (click)="add()">
+    <ion-fab-button (click)="edit()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
