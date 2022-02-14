@@ -12,7 +12,7 @@ interface GroupedBottleTime {
 })
 export class GroupByDatePipe implements PipeTransform {
   transform(times: BottleTime[]): GroupedBottleTime[] {
-    return times?.reduce((acc, val) => {
+    return times?.sort((a, b) => a.date < b.date ? 1 : -1).reduce((acc, val) => {
       const thisDate = new Date(parseInt(val.date, 10)).setHours(0, 0, 0, 0).toString();
       const matchingDate = acc.find(v => v.date === thisDate)
       if (matchingDate) {
