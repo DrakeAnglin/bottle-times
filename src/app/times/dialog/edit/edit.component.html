@@ -7,22 +7,22 @@
 <ion-content [fullscreen]="true">
   <ion-item>
     <ion-label>Ounces</ion-label>
-    <ion-input type="number" [(ngModel)]="item.ounces"></ion-input>
+    <ion-input type="number" [(ngModel)]="editItem.ounces"></ion-input>
   </ion-item>
 
   <ion-item button="true" (click)="isModalOpen = true">
    <ion-label>Date</ion-label>
-   <ion-text slot="end">{{ item.date | date: 'MMM dd yyyy' }}</ion-text>
+   <ion-text slot="end">{{ editItem.date | date: 'MMM dd yyyy' }}</ion-text>
  </ion-item>
 
-  <ion-datetime size="cover" presentation="time" [(ngModel)]="item.date"></ion-datetime>
+  <ion-datetime size="cover" presentation="time" [(ngModel)]="editItem.date"></ion-datetime>
 
   <ion-button expand="block" (click)="save()">Save</ion-button>
 
   <ion-modal [isOpen]="isModalOpen">
     <ng-template>
       <ion-content>
-        <ion-datetime size="cover" presentation="date" [(ngModel)]="item.date"></ion-datetime>
+        <ion-datetime size="cover" presentation="date" [(ngModel)]="editItem.date"></ion-datetime>
         <ion-button expand="block" (click)="isModalOpen = false">Done</ion-button>
       </ion-content>
     </ng-template>
