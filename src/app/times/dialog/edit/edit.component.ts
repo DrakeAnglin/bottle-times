@@ -10,7 +10,7 @@ import { BottleTime } from '../../times.page';
 })
 export class EditComponent implements OnInit {
   @Input() item: BottleTime = {
-    date: new Date().toJSON(),
+    date: new Date().getTime().toString(),
     ounces: 4,
   };
 
@@ -20,10 +20,11 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.item);
-    
   }
 
   save() {
+    this.item.date = new Date(this.item.date).getTime().toString();
+
     if (this.item.key) {
       this.db.list('times').update(this.item.key, this.item);
     } else {
